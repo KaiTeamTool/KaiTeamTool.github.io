@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+---
+
+<Base title={`404 — ${SITE.name}`}>
+  <section class="wrap nf">
+    <div class="panel">
+      <div class="line"><span class="g">$</span> cd {Astro.url.pathname}</div>
+      <div class="err">cd: no such file or directory: {Astro.url.pathname}</div>
+      <div class="line"><span class="g">$</span> cd ~<span class="cursor"></span></div>
+      <a class="home" href="/">← back to /portfolio</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { padding-top: 64px; }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    padding: 34px clamp(22px, 4vw, 40px);
+    max-width: 560px;
+    font-family: var(--mono);
+    font-size: 14px;
+  }
+  .line { color: var(--fg-soft); margin-bottom: 6px; }
+  .line .g { color: var(--green); margin-right: 8px; }
+  .err { color: var(--amber); margin: 4px 0 18px; font-size: 13px; }
+  .home {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--muted-2);
+    border-bottom: 1px dotted var(--line-3);
+    padding-bottom: 2px;
+  }
+  .home:hover { color: var(--green); border-color: var(--green); }
+</style>

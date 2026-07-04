@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+import TerminalNav from '../components/TerminalNav.astro';
+import { SITE } from '../config';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = SITE.description } = Astro.props;
+
+// Absolute URLs for canonical + social cards (Astro.site is set in astro.config).
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.svg', Astro.site).href;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0b0c" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <TerminalNav />
+    <main>
+      <slot />
+    </main>
+    <footer class="site-foot">
+      <div class="wrap foot-inner">
+        <span class="foot-mark">{SITE.name}</span>
+        <span class="foot-meta">built at night · <a href={SITE.github}>github</a> · <a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
+      </div>
+    </footer>
+
+    <style>
+      main { min-height: 60vh; }
+
+      .site-foot {
+        border-top: 1px solid var(--line);
+        margin-top: 72px;
+        padding: 28px 0 40px;
+      }
+      .foot-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .foot-mark {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--muted-2);
+      }
+      .foot-meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--faint);
+      }
+      .foot-meta a { color: var(--muted-2); border-bottom: 1px dotted var(--line-3); }
+      .foot-meta a:hover { color: var(--green); border-color: var(--green); }
+    </style>
+  </body>
+</html>

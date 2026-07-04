@@ -1,0 +1,103 @@
+/* ============================================================
+   KaiTeamTool portfolio — design tokens from the wireframe
+   terminal-ish · minimal · dark-default
+   ============================================================ */
+:root {
+  /* surfaces */
+  --bg: #0a0b0c;          /* page */
+  --panel: #0e0f11;       /* terminal window / cards container */
+  --panel-2: #121316;     /* raised card on hover */
+  --line: #1d1f23;        /* hairline dividers */
+  --line-2: #23262b;      /* card borders */
+  --line-3: #2a2d33;      /* tag borders */
+  --dash: #34373d;        /* dashed placeholders */
+
+  /* text */
+  --fg: #f0f0f0;
+  --fg-soft: #c8c8c8;
+  --muted: #80838a;
+  --muted-2: #7a7d83;
+  --faint: #5a5d63;
+
+  /* accents */
+  --green: #3fb868;
+  --green-ink: #06210f;
+  --amber: #e0a630;
+  --blue: #4aa3df;
+  --blue-ink: #06182b;
+
+  /* type */
+  --display: 'Space Grotesk', system-ui, sans-serif;
+  --mono: 'Space Mono', ui-monospace, 'SF Mono', monospace;
+  --hand: 'Architects Daughter', cursive;
+
+  --radius: 3px;
+  --maxw: 1040px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--display);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* faint scanline/grid texture, very subtle */
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(63, 184, 104, 0.05), transparent 55%);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* blinking terminal cursor ------------------------------------ */
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: var(--green);
+  vertical-align: -2px;
+  margin-left: 5px;
+  animation: blink 1s step-end infinite;
+}
+
+/* status dot -------------------------------------------------- */
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex: none;
+  display: inline-block;
+}
+.dot.idea        { background: var(--blue);  box-shadow: 0 0 8px rgba(74,163,223,.5); }
+.dot.in-progress { background: var(--amber); box-shadow: 0 0 8px rgba(224,166,48,.45); }
+.dot.active      { background: var(--green); box-shadow: 0 0 8px rgba(63,184,104,.55); }
+.dot.archive     { background: var(--faint); box-shadow: none; }
+
+/* stack tag --------------------------------------------------- */
+.tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted-2);
+  border: 1px solid var(--line-3);
+  border-radius: 2px;
+  padding: 3px 7px;
+  white-space: nowrap;
+}
+
+/* reduced motion --------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}

@@ -1,0 +1,200 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { title, tagline, status, stack, landing, repo, demo, shots } = project.data;
+const { Content } = await render(project);
+const STATUS_LABELS = {
+  idea: 'IDEA',
+  'in-progress': 'IN-PROGRESS',
+  active: 'ACTIVE',
+  archive: 'ARCHIVE',
+} as const;
+---
+
+<Base title={`${title} — ${SITE.name}`} description={tagline}>
+  <article class="wrap detail">
+    <div class="panel">
+      <a class="back" href="/#projects">← ./projects</a>
+
+      <header class="head">
+        <h1 class="name">{title}</h1>
+        <span class={`badge ${status}`}>
+          <span class={`dot ${status}`}></span>{STATUS_LABELS[status]}
+        </span>
+      </header>
+      <p class="tagline">{tagline}</p>
+
+      <h2 class="label">THE IDEA</h2>
+      <div class="idea">
+        <Content />
+      </div>
+
+      {demo && (
+        <div class="demo-media">
+          <img src={demo} alt={`${title} demo`} loading="lazy" />
+        </div>
+      )}
+      {shots && shots.length > 0 && (
+        <div class="shots">
+          {shots.map((src) => (
+            <img class="shot" src={src} alt={`${title} screenshot`} loading="lazy" />
+          ))}
+        </div>
+      )}
+
+      <div class="stack">
+        {stack.map((t) => <span class="tag">{t}</span>)}
+      </div>
+
+      <div class="actions">
+        {landing && (
+          <a class="cta primary" href={landing} target="_blank" rel="noopener">
+            Visit landing →
+          </a>
+        )}
+        {repo && (
+          <a class="cta ghost" href={repo} target="_blank" rel="noopener">
+            Source ↗
+          </a>
+        )}
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .detail { padding-top: 44px; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    padding: 30px clamp(22px, 4vw, 40px) 38px;
+    max-width: 720px;
+  }
+
+  .back {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted-2);
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+  .back:hover { color: var(--green); }
+
+  .head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(30px, 5vw, 40px);
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    margin: 0;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    padding: 4px 9px;
+    border-radius: 2px;
+  }
+  .badge.idea        { color: var(--blue);  border: 1px solid #244a63; }
+  .badge.in-progress { color: var(--amber); border: 1px solid #4d3f1f; }
+  .badge.active      { color: var(--green); border: 1px solid #2a4d36; }
+  .badge.archive     { color: var(--muted); border: 1px solid var(--line-3); }
+  .badge .dot { box-shadow: none; }
+
+  .tagline {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin: 12px 0 28px;
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--faint);
+    margin: 0 0 12px;
+    font-weight: 400;
+  }
+  .idea {
+    font-family: var(--display);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--fg-soft);
+    margin-bottom: 30px;
+  }
+  .idea :global(p) { margin: 0 0 14px; }
+  .idea :global(p:last-child) { margin-bottom: 0; }
+  .idea :global(code) {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: #1a1c1f;
+    border: 1px solid var(--line-2);
+    border-radius: 2px;
+    padding: 1px 5px;
+    color: var(--green);
+  }
+
+  /* media ----------------------------------------------------- */
+  .demo-media { margin-bottom: 18px; }
+  .demo-media img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+  }
+
+  .shots { display: flex; gap: 10px; margin-bottom: 30px; }
+  .shot {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    object-fit: cover;
+  }
+
+  .stack { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 28px; }
+  .stack .tag { font-size: 10px; padding: 4px 8px; }
+
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 13px 20px;
+    border-radius: var(--radius);
+    transition: transform 0.14s ease, filter 0.14s ease, border-color 0.14s ease;
+  }
+  .cta.primary { background: var(--green); color: var(--green-ink); }
+  .cta.primary:hover { filter: brightness(1.07); transform: translateY(-1px); }
+  .cta.ghost {
+    color: var(--fg-soft);
+    border: 1px solid var(--line-3);
+  }
+  .cta.ghost:hover { border-color: var(--green); color: var(--green); }
+
+  @media (max-width: 460px) {
+    .shots { flex-direction: column; }
+  }
+</style>

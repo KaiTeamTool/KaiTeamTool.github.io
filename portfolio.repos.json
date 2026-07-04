@@ -1,0 +1,6 @@
+{
+  "_comment": "Repos to import into the portfolio. Each must contain a .portfolio.md descriptor. Array order = display order on the home grid. Paths are resolved relative to this file.",
+  "repos": [
+    "../android/bot_droid"
+  ]
+}
