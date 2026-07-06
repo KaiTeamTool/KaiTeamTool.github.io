@@ -3,6 +3,7 @@ title: BotDroid
 tagline: Run Telegram bots 24/7 directly on your Android phone — no server, no Linux.
 status: active
 stack: [Kotlin, Jetpack Compose, Room, Android, Picobot]
+landing: https://botdroid-landing.kaitodroid.workers.dev/
 order: 1
 ---
 
