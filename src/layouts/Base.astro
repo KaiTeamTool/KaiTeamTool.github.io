@@ -52,7 +52,7 @@ const ogImage = new URL('/og.svg', Astro.site).href;
     <footer class="site-foot">
       <div class="wrap foot-inner">
         <span class="foot-mark">{SITE.name}</span>
-        <span class="foot-meta">built at night · <a href={SITE.github}>github</a> · <a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
+        <span class="foot-meta">built at night · <a href={SITE.github}>github</a>{SITE.reddit && <> · <a href={SITE.reddit} target="_blank" rel="noopener">reddit</a></>} · <a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
       </div>
     </footer>
 

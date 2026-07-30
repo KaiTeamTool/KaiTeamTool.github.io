@@ -97,6 +97,7 @@ const groups = CATS.map((cat) => ({
       </p>
       <div class="about-links">
         <a href={SITE.github}>github ↗</a>
+        {SITE.reddit && <a href={SITE.reddit} target="_blank" rel="noopener">reddit ↗</a>}
         <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
       </div>
     </section>

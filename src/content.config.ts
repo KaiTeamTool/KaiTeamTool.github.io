@@ -12,6 +12,7 @@ const projects = defineCollection({
     stack: z.array(z.string()),
     landing: z.string().url().optional(),
     repo: z.string().url().optional(),
+    reddit: z.string().url().optional(),
     // optional media: a demo loop and up to a few screenshots. When absent,
     // the detail page renders no media blocks (no empty placeholders).
     demo: z.string().optional(),
