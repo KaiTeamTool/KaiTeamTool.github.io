@@ -5,6 +5,7 @@ export const SITE = {
   promptUser: 'kaiteam@tool',
   termPath: 'kaiteamtool ~ /portfolio',
   github: 'https://github.com/KaiTeamTool',
+  reddit: 'https://www.reddit.com/r/BotDroid',
   // TODO: user to supply the real KaiTeamTool contact address before publish
   email: 'kaiteam@proton.me',
   description:

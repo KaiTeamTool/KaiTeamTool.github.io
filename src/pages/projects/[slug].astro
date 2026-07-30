@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { title, tagline, status, stack, landing, repo, demo, shots } = project.data;
+const { title, tagline, status, stack, landing, repo, reddit, demo, shots } = project.data;
 const { Content } = await render(project);
 const STATUS_LABELS = {
   idea: 'IDEA',
@@ -66,6 +66,11 @@ const STATUS_LABELS = {
         {repo && (
           <a class="cta ghost" href={repo} target="_blank" rel="noopener">
             Source ↗
+          </a>
+        )}
+        {reddit && (
+          <a class="cta ghost" href={reddit} target="_blank" rel="noopener">
+            Reddit Community ↗
           </a>
         )}
       </div>
